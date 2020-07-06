@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="js/siritori.js"></script>
+    <title>しりとり</title>
+</head>
+
+<body>
+    <h1>しりとり</h1>
+    <form onsubmit="return false;">
+        次の単語
+        <input type="text" id="my_word_input" size="20">
+        <input type="button" value="決定" onclick="confirmed_my_word();">
+    </form>
+
+    <div>
+        <h2>過去</h2>
+        <ul id="back_words">
+            <li id="back_words_head">しりとり</li>
+        </ul>
+    </div>
+</body>
+
+</html>
