@@ -1,10 +1,12 @@
+var back_words = new Set();
+
+back_words.add("しりとり");
+
 function confirmed_my_word() {
     if (check_words()) {
-        console.log("OK!");
         add_words();
     }
     else {
-        console.log("NO!");
     }
 }
 
@@ -15,12 +17,18 @@ function check_words() {
     console.log(back_words_head + " -> " + my_word);
     console.log(back_words_head.slice(-1) + " -> " + my_word.slice(0, 1));
 
-    if (back_words_head.slice(-1) == my_word.slice(0, 1)) {
-        return true;
-    }
-    else {
+    if (back_words_head.slice(-1) != my_word.slice(0, 1)) {
+        console.log("NO!");
         return false;
     }
+
+    if (back_words.has(my_word)) {
+        console.log("NO!");
+        return false;
+    }
+
+    console.log("OK!");
+    return true;
 }
 
 function add_words() {
@@ -41,4 +49,6 @@ function add_words() {
     new_back_word_el.id = "back_word_head";
 
     document.getElementById("my_word_input").value = "";
+
+    back_words.add(my_word);
 }
