@@ -9,11 +9,14 @@
 
 <body>
     <h1>しりとり</h1>
-    <form onsubmit="return false;">
-        <span id="backest_word">しりとり</span>
-        →
-        <input type="text" id="my_word_input" size="20">
-        <input type="button" value="決定" onclick="confirmed_my_word();">
+
+    <form onsubmit="return confirmed_my_word();">
+        <p>
+            <span id="backest_word">しりとり</span>
+            →
+            <input type="text" id="my_word_input" size="20">
+            <input type="submit" value="決定">
+        </p>
     </form>
 
     <div>

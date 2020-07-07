@@ -8,6 +8,8 @@ function confirmed_my_word() {
     }
     else {
     }
+
+    return false;
 }
 
 function check_words() {
