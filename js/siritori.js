@@ -1,10 +1,10 @@
-var back_words = new Set();
+var backWords = new Set();
 
-back_words.add("しりとり");
+backWords.add("しりとり");
 
-function confirmed_my_word() {
-    if (check_word()) {
-        add_word();
+function confirmedMyWord() {
+    if (checkWord()) {
+        addWord();
     }
     else {
     }
@@ -12,8 +12,8 @@ function confirmed_my_word() {
     return false;
 }
 
-function check_word() {
-    if (check_connect() && check_used()) {
+function checkWord() {
+    if (checkConnect() && checkUsed()) {
         console.log("OK!");
         return true;
     }
@@ -23,46 +23,46 @@ function check_word() {
     }
 }
 
-function check_connect() {
-    var my_word = document.getElementById("my_word_input").value;
-    var backest_word = document.getElementById("back_word_head").innerHTML;
+function checkConnect() {
+    var myWord = document.getElementById("my_word_input").value;
+    var backestWord = document.getElementById("back_words_head").innerHTML;
 
-    console.log(backest_word + " -> " + my_word);
-    console.log(backest_word.slice(-1) + " -> " + my_word.slice(0, 1));
+    console.log(backestWord + " -> " + myWord);
+    console.log(backestWord.slice(-1) + " -> " + myWord.slice(0, 1));
 
-    return backest_word.slice(-1) == my_word.slice(0, 1);
+    return backestWord.slice(-1) == myWord.slice(0, 1);
 }
 
-function check_used() {
-    var my_word = document.getElementById("my_word_input").value;
+function checkUsed() {
+    var myWord = document.getElementById("my_word_input").value;
 
-    return !back_words.has(my_word);
+    return !backWords.has(myWord);
 }
 
-function add_word() {
-    var my_word = document.getElementById("my_word_input").value;
+function addWord() {
+    var myWord = document.getElementById("my_word_input").value;
 
-    add_word_ul();
+    addWordToUl();
 
-    document.getElementById("backest_word").innerHTML = my_word;
+    document.getElementById("backest_word").innerHTML = myWord;
 
     document.getElementById("my_word_input").value = "";
 
-    back_words.add(my_word);
+    backWords.add(myWord);
 }
 
-function add_word_ul() {
-    var my_word = document.getElementById("my_word_input").value;
-    var my_word_el = document.createTextNode(my_word);
+function addWordToUl() {
+    var myWord = document.getElementById("my_word_input").value;
+    var myWordElement = document.createTextNode(myWord);
 
-    var new_back_word_el = document.createElement("li");
-    new_back_word_el.appendChild(my_word_el);
+    var newBackWordElement = document.createElement("li");
+    newBackWordElement.appendChild(myWordElement);
 
-    var back_words_head_el = document.getElementById("back_word_head");
+    var back_words_head_el = document.getElementById("back_words_head");
 
-    var back_words_el = document.getElementById("back_words");
-    back_words_el.insertBefore(new_back_word_el, back_words_head_el);
+    var backWordsElement = document.getElementById("back_words");
+    backWordsElement.insertBefore(newBackWordElement, back_words_head_el);
 
     back_words_head_el.removeAttribute("id");
-    new_back_word_el.id = "back_word_head";
+    newBackWordElement.id = "back_words_head";
 }
