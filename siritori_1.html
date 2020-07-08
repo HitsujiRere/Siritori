@@ -12,14 +12,17 @@
 <body>
     <h1><a href="index.html">しりとり</a></h1>
 
-    <form onsubmit="return confirmedMyWord();">
-        <p>
-            <span id="backest_word">しりとり</span>
-            →
-            <input type="text" id="my_word_input" size="20">
-            <input type="submit" value="決定">
-        </p>
+    <p>
+        <span id="backest_word">しりとり</span>
+        →
+    </p>
+
+    <form onsubmit="confirmedMyWord(); return false;">
+        <input type="text" id="my_word_input" size="20">
+        <input type="submit" value="決定">
     </form>
+
+    <p id="input_message"></p>
 
     <div>
         <h2>過去</h2>

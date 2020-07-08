@@ -1,13 +1,15 @@
-var backWords = new Set();
+const backWords = new Set();
 
 backWords.add("しりとり");
+
+let messageText = "";
 
 function confirmedMyWord() {
     if (checkWord()) {
         addWord();
     }
-    else {
-    }
+
+    updateMessage();
 
     return false;
 }
@@ -15,6 +17,7 @@ function confirmedMyWord() {
 function checkWord() {
     if (checkHiragana() && checkConnect() && checkUsed()) {
         console.log("OK!");
+        messageText = "正解";
         return true;
     }
     else {
@@ -26,12 +29,15 @@ function checkWord() {
 function checkHiragana() {
     const myWord = document.getElementById("my_word_input").value;
 
-    if (myWord == null)
+    if (myWord == null) {
+        messageText = "空文字です";
         return false;
+    }
 
     if (myWord.match(/^[ぁ-んー　]*$/)) {
         return true;
     } else {
+        messageText = "ひらがなではありません";
         return false;
     }
 }
@@ -43,13 +49,23 @@ function checkConnect() {
     console.log(backestWord + " -> " + myWord);
     console.log(backestWord.slice(-1) + " -> " + myWord.slice(0, 1));
 
-    return backestWord.slice(-1) == myWord.slice(0, 1);
+    if (backestWord.slice(-1) == myWord.slice(0, 1)) {
+        return true;
+    } else {
+        messageText = "前の単語と繋がりません";
+        return false;
+    }
 }
 
 function checkUsed() {
     const myWord = document.getElementById("my_word_input").value;
 
-    return !backWords.has(myWord);
+    if (!backWords.has(myWord)) {
+        return true;
+    } else {
+        messageText = "既に使用されています";
+        return false;
+    }
 }
 
 function addWord() {
@@ -71,11 +87,16 @@ function addWordToUl() {
     const newBackWordElement = document.createElement("li");
     newBackWordElement.appendChild(myWordElement);
 
-    const back_words_head_el = document.getElementById("back_words_head");
+    const backWordsHeadEl = document.getElementById("back_words_head");
 
     const backWordsElement = document.getElementById("back_words");
-    backWordsElement.insertBefore(newBackWordElement, back_words_head_el);
+    backWordsElement.insertBefore(newBackWordElement, backWordsHeadEl);
 
-    back_words_head_el.removeAttribute("id");
+    backWordsHeadEl.removeAttribute("id");
     newBackWordElement.id = "back_words_head";
+}
+
+function updateMessage() {
+    const messageEl = document.getElementById("input_message");
+    messageEl.innerHTML = messageText;
 }
