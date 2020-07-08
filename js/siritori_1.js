@@ -13,7 +13,7 @@ function confirmedMyWord() {
 }
 
 function checkWord() {
-    if (checkConnect() && checkUsed()) {
+    if (checkHiragana() && checkConnect() && checkUsed()) {
         console.log("OK!");
         return true;
     }
@@ -23,9 +23,22 @@ function checkWord() {
     }
 }
 
+function checkHiragana() {
+    const myWord = document.getElementById("my_word_input").value;
+
+    if (myWord == null)
+        return false;
+
+    if (myWord.match(/^[ぁ-んー　]*$/)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function checkConnect() {
-    var myWord = document.getElementById("my_word_input").value;
-    var backestWord = document.getElementById("back_words_head").innerHTML;
+    const myWord = document.getElementById("my_word_input").value;
+    const backestWord = document.getElementById("back_words_head").innerHTML;
 
     console.log(backestWord + " -> " + myWord);
     console.log(backestWord.slice(-1) + " -> " + myWord.slice(0, 1));
@@ -34,13 +47,13 @@ function checkConnect() {
 }
 
 function checkUsed() {
-    var myWord = document.getElementById("my_word_input").value;
+    const myWord = document.getElementById("my_word_input").value;
 
     return !backWords.has(myWord);
 }
 
 function addWord() {
-    var myWord = document.getElementById("my_word_input").value;
+    const myWord = document.getElementById("my_word_input").value;
 
     addWordToUl();
 
@@ -52,15 +65,15 @@ function addWord() {
 }
 
 function addWordToUl() {
-    var myWord = document.getElementById("my_word_input").value;
-    var myWordElement = document.createTextNode(myWord);
+    const myWord = document.getElementById("my_word_input").value;
+    const myWordElement = document.createTextNode(myWord);
 
-    var newBackWordElement = document.createElement("li");
+    const newBackWordElement = document.createElement("li");
     newBackWordElement.appendChild(myWordElement);
 
-    var back_words_head_el = document.getElementById("back_words_head");
+    const back_words_head_el = document.getElementById("back_words_head");
 
-    var backWordsElement = document.getElementById("back_words");
+    const backWordsElement = document.getElementById("back_words");
     backWordsElement.insertBefore(newBackWordElement, back_words_head_el);
 
     back_words_head_el.removeAttribute("id");
