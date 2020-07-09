@@ -12,7 +12,6 @@ window.onload = function () {
 
 function confirmedMyWord() {
     if (checkWord()) {
-        connectTime++;
         addWord();
         updateTweetText();
     }
@@ -25,7 +24,8 @@ function confirmedMyWord() {
 function checkWord() {
     if (checkHiragana() && checkConnect() && checkUsed()) {
         console.log("OK!");
-        messageText = "正解";
+        connectTime++;
+        messageText = `${connectTime}個目！`;
         return true;
     }
     else {
