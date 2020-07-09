@@ -12,6 +12,13 @@
 <body>
     <h1><a href="index.html">しりとり</a></h1>
 
+    <h2>１人しりとり</h2>
+
+    <p>ルール</p>
+    <ul>
+        <li>ひらがなのみ使用可能</li>
+    </ul>
+
     <p>
         <span id="backest_word">しりとり</span>
         →
@@ -24,12 +31,13 @@
 
     <p id="input_message"></p>
 
-    <div>
-        <h2>過去</h2>
-        <ul id="back_words">
-            <li id="back_words_head">しりとり</li>
-        </ul>
-    </div>
+    <div id="tweet-area"> </div>
+    <script src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <h2>過去</h2>
+    <ul id="back_words">
+        <li id="back_words_head">しりとり</li>
+    </ul>
 </body>
 
 </html>

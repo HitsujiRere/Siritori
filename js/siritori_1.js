@@ -2,11 +2,19 @@ const backWords = new Set();
 
 backWords.add("しりとり");
 
+let connectTime = 0;
+
 let messageText = "";
+
+window.onload = function () {
+    updateTweetText();
+};
 
 function confirmedMyWord() {
     if (checkWord()) {
+        connectTime++;
         addWord();
+        updateTweetText();
     }
 
     updateMessage();
@@ -96,7 +104,34 @@ function addWordToUl() {
     newBackWordElement.id = "back_words_head";
 }
 
+function updateTweetText() {
+    setTweetButton(
+        `１人しりとりで${connectTime}回続きました！`
+    );
+}
+
 function updateMessage() {
     const messageEl = document.getElementById("input_message");
     messageEl.innerHTML = messageText;
+}
+
+// 任意のタイミングで呼べば狙ったとおりのテキストのボタンつくれる
+// 引数増やしていろいろやってもよいですね。
+// FROM: https://qiita.com/lovesaemi/items/d4f296b6b1d5158d2fea
+// FIX : URLを任意のものに変更できない
+function setTweetButton(text) {
+    //$('#tweet-area').empty(); //既存のボタン消す
+    document.getElementById("tweet-area").textContent = null;
+    // htmlでスクリプトを読んでるからtwttがエラーなく呼べる
+    // オプションは公式よんで。
+    twttr.widgets.createShareButton(
+        "",
+        document.getElementById("tweet-area"),
+        {
+            size: "large", //ボタンはでかく
+            text: text, // 狙ったテキスト
+            //hashtags: "１人しりとり", // ハッシュタグ
+            //url: url // URL
+        }
+    );
 }
