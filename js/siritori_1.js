@@ -26,7 +26,7 @@ function confirmedMyWord() {
     }
 
     // 入力した単語が正しいか調べる
-    if (checkWord()) {
+    if (checkMyWord()) {
         // 単語の追加
         addWord();
         // ツイートする文の更新
@@ -40,7 +40,7 @@ function confirmedMyWord() {
 }
 
 // 入力された単語が正しいか確かめる
-function checkWord() {
+function checkMyWord() {
     if (checkHiragana() && checkConnect() && checkNotUsed()) {
         console.log("OK!");
 
