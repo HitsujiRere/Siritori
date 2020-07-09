@@ -17,14 +17,16 @@
     <p>ルール</p>
     <ul>
         <li>ひらがなのみ使用可能</li>
+        <li>最後の文字が「ん」だと終了</li>
+        <li>最後の文字が「ゃ」「ゅ」「ょ」「っ」だとその前の文字から繋げる</li>
     </ul>
 
     <p>
-        <span id="back_word">backWord</span>
+        <span id="back_word">any word</span>
         →
     </p>
 
-    <form onsubmit="confirmedMyWord(); return false;">
+    <form onsubmit="submitedMyWord(); return false;">
         <input type="text" id="my_word_input" size="20">
         <input type="submit" value="決定">
     </form>
@@ -33,7 +35,6 @@
 
     <h2>過去</h2>
     <ul id="back_words">
-        <li>しりとり</li>
     </ul>
 
     <div id="tweet-area"> </div>

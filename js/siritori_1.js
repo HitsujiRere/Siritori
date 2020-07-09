@@ -8,48 +8,61 @@ let connectTime = 0;
 // メッセージテキスト
 let messageText = "";
 
+// プレイ中かどうか
+let isPlaying = true;
+
+// 前の単語の繋がる文字
+let backWordFoot = "";
+
 window.onload = function () {
     // 最初の単語
     const firstWord = "しりとり";
-
-    // 最初の単語の設定
-    document.getElementById("back_word").innerHTML = firstWord;
-    backWords.add(firstWord);
+    addWord(firstWord);
 
     // ツイートボタンの初期化
     updateTweetText();
 };
 
 // 単語の入力を感知する
-function confirmedMyWord() {
+function submitedMyWord() {
     const myWord = document.getElementById("my_word_input").value;
 
     // 単語が入力されていないなら終わる
-    if (myWord == "") {
-        return false;
+    if (myWord == "" || !isPlaying) {
+        return;
     }
 
     // 入力した単語が正しいか調べる
-    if (checkMyWord()) {
+    if (checkWord(myWord)) {
         // 単語の追加
-        addWord();
+        addWord(myWord);
         // ツイートする文の更新
         updateTweetText();
+        // 入力フォームを空にする
+        document.getElementById("my_word_input").value = "";
     }
 
     // メッセージの更新
     updateMessage();
-
-    return false;
 }
 
-// 入力された単語が正しいか確かめる
-function checkMyWord() {
-    if (checkHiragana() && checkConnect() && checkNotUsed()) {
-        console.log("OK!");
-
+// 単語が正しいか確かめる
+function checkWord(word) {
+    if (checkHiragana(word) && checkConnect(word) && checkNotUsed(word)) {
         connectTime++;
-        messageText = `${connectTime}個目！`;
+
+        if (checkContinue(word)) {
+            console.log("OK!");
+
+            messageText = `${connectTime}個目！`;
+        }
+        else {
+            console.log("FINISH!");
+
+            messageText = `${connectTime}個で終了！`;
+
+            isPlaying = false;
+        }
 
         return true;
     }
@@ -61,16 +74,14 @@ function checkMyWord() {
 }
 
 // 全てひらがなかどうか
-function checkHiragana() {
-    const myWord = document.getElementById("my_word_input").value;
-
-    if (myWord == null) {
+function checkHiragana(word) {
+    if (word == null) {
         messageText = "空文字です";
 
         return false;
     }
 
-    if (myWord.match(/^[ぁ-んー]*$/)) {
+    if (word.match(/^[ぁ-んー]*$/)) {
         return true;
     } else {
         messageText = "ひらがなではありません";
@@ -80,14 +91,15 @@ function checkHiragana() {
 }
 
 // 前の単語と繋がっているか
-function checkConnect() {
-    const myWord = document.getElementById("my_word_input").value;
-    const backWord = document.getElementById("back_word").innerHTML;
+function checkConnect(word) {
 
-    console.log(backWord + " -> " + myWord);
-    console.log(backWord.slice(-1) + " -> " + myWord.slice(0, 1));
+    if (backWordFoot == "") {
+        return true;
+    }
 
-    if (backWord.slice(-1) == myWord.slice(0, 1)) {
+    console.log(backWordFoot + " -> " + word.slice(0, 1));
+
+    if (backWordFoot == word.slice(0, 1)) {
         return true;
     } else {
         messageText = "前の単語と繋がりません";
@@ -96,10 +108,8 @@ function checkConnect() {
 }
 
 // 使われていないか調べる
-function checkNotUsed() {
-    const myWord = document.getElementById("my_word_input").value;
-
-    if (!backWords.has(myWord)) {
+function checkNotUsed(word) {
+    if (!backWords.has(word)) {
         return true;
     } else {
         messageText = "既に使用されています";
@@ -107,29 +117,44 @@ function checkNotUsed() {
     }
 }
 
+// まだ続くかどうか
+function checkContinue(word) {
+    return word.slice(-1) != "ん";
+}
+
 // 単語を追加する
-function addWord() {
-    const myWord = document.getElementById("my_word_input").value;
+function addWord(word) {
+    addWordToBackWords(word);
 
-    addWordToBackWords();
+    document.getElementById("back_word").innerHTML = word;
 
-    document.getElementById("back_word").innerHTML = myWord;
+    backWords.add(word);
 
-    document.getElementById("my_word_input").value = "";
-
-    backWords.add(myWord);
+    updateBackWordFoot(word);
 }
 
 // 過去への単語の追加
-function addWordToBackWords() {
-    const myWord = document.getElementById("my_word_input").value;
-    const myWordElement = document.createTextNode(myWord);
+function addWordToBackWords(word) {
+    const wordElement = document.createTextNode(word);
 
     const newBackWordElement = document.createElement("li");
-    newBackWordElement.appendChild(myWordElement);
+    newBackWordElement.appendChild(wordElement);
 
     const backWordsElement = document.getElementById("back_words");
     backWordsElement.insertBefore(newBackWordElement, backWordsElement.firstChild);
+}
+
+const NGFootChars = [
+    "ゃ", "ゅ", "ょ", "っ",
+];
+function updateBackWordFoot(word) {
+    backWordFoot = word.slice(-1);
+
+    let i = -2;
+    while (NGFootChars.some(c => c == backWordFoot)) {
+        backWordFoot = word.slice(i, i + 1);
+        i--;
+    }
 }
 
 // ツイートするテキストの変更
