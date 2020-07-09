@@ -34,7 +34,7 @@ function checkHiragana() {
         return false;
     }
 
-    if (myWord.match(/^[ぁ-んー　]*$/)) {
+    if (myWord.match(/^[ぁ-んー]*$/)) {
         return true;
     } else {
         messageText = "ひらがなではありません";
