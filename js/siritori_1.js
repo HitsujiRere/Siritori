@@ -9,8 +9,12 @@ let connectTime = 0;
 let messageText = "";
 
 window.onload = function () {
+    // 最初の単語
+    const firstWord = "しりとり";
+
     // 最初の単語の設定
-    backWords.add("しりとり");
+    document.getElementById("back_word").innerHTML = firstWord;
+    backWords.add(firstWord);
 
     // ツイートボタンの初期化
     updateTweetText();
@@ -78,7 +82,7 @@ function checkHiragana() {
 // 前の単語と繋がっているか
 function checkConnect() {
     const myWord = document.getElementById("my_word_input").value;
-    const backWord = document.getElementById("backest_word").innerHTML;
+    const backWord = document.getElementById("back_word").innerHTML;
 
     console.log(backWord + " -> " + myWord);
     console.log(backWord.slice(-1) + " -> " + myWord.slice(0, 1));
@@ -109,7 +113,7 @@ function addWord() {
 
     addWordToBackWords();
 
-    document.getElementById("backest_word").innerHTML = myWord;
+    document.getElementById("back_word").innerHTML = myWord;
 
     document.getElementById("my_word_input").value = "";
 
