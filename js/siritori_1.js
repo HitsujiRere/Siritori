@@ -22,6 +22,10 @@ function confirmedMyWord() {
 }
 
 function checkWord() {
+    const myWord = document.getElementById("my_word_input").value;
+    if (myWord == "")
+        return false;
+
     if (checkHiragana() && checkConnect() && checkUsed()) {
         console.log("OK!");
         connectTime++;
@@ -52,7 +56,7 @@ function checkHiragana() {
 
 function checkConnect() {
     const myWord = document.getElementById("my_word_input").value;
-    const backestWord = document.getElementById("back_words_head").innerHTML;
+    const backestWord = document.getElementById("backest_word").innerHTML;
 
     console.log(backestWord + " -> " + myWord);
     console.log(backestWord.slice(-1) + " -> " + myWord.slice(0, 1));
@@ -95,13 +99,8 @@ function addWordToUl() {
     const newBackWordElement = document.createElement("li");
     newBackWordElement.appendChild(myWordElement);
 
-    const backWordsHeadEl = document.getElementById("back_words_head");
-
     const backWordsElement = document.getElementById("back_words");
-    backWordsElement.insertBefore(newBackWordElement, backWordsHeadEl);
-
-    backWordsHeadEl.removeAttribute("id");
-    newBackWordElement.id = "back_words_head";
+    backWordsElement.insertBefore(newBackWordElement, backWordsElement.firstChild);
 }
 
 function updateTweetText() {
