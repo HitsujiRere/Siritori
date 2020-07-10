@@ -76,7 +76,7 @@ function checkWord(word) {
 // 全てひらがなかどうか
 function checkHiragana(word) {
     if (word == null) {
-        messageText = "空文字です";
+        messageText = "nullです";
 
         return false;
     }
@@ -124,13 +124,15 @@ function checkContinue(word) {
 
 // 単語を追加する
 function addWord(word) {
+    updateBackWordFoot(word);
+
     addWordToBackWords(word);
 
     document.getElementById("back_word").innerHTML = word;
+    document.getElementById("back_word_foot").innerHTML = backWordFoot;
+    console.log(backWordFoot);
 
     backWords.add(word);
-
-    updateBackWordFoot(word);
 }
 
 // 過去への単語の追加する
