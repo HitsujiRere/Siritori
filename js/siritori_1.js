@@ -133,7 +133,7 @@ function addWord(word) {
     updateBackWordFoot(word);
 }
 
-// 過去への単語の追加
+// 過去への単語の追加する
 function addWordToBackWords(word) {
     const wordElement = document.createTextNode(word);
 
@@ -144,14 +144,16 @@ function addWordToBackWords(word) {
     backWordsElement.insertBefore(newBackWordElement, backWordsElement.firstChild);
 }
 
-const NGFootChars = [
-    "ゃ", "ゅ", "ょ", "っ",
+// 繋がる文字として使えない文字
+const NGBackWordFootChars = [
+    "ゃ", "ゅ", "ょ", "っ", "ー",
 ];
+// backWordFootを更新する
 function updateBackWordFoot(word) {
     backWordFoot = word.slice(-1);
 
     let i = -2;
-    while (NGFootChars.some(c => c == backWordFoot)) {
+    while (NGBackWordFootChars.some(c => c == backWordFoot)) {
         backWordFoot = word.slice(i, i + 1);
         i--;
     }
@@ -172,21 +174,18 @@ function updateMessage() {
 
 // FROM: https://qiita.com/lovesaemi/items/d4f296b6b1d5158d2fea
 // FIX : URLを任意のものに変更できない
-// 任意のタイミングで呼べば狙ったとおりのテキストのボタンつくれる
-// 引数増やしていろいろやってもよいですね。
 function setTweetButton(text) {
-    //$('#tweet-area').empty(); //既存のボタン消す
+    //既存のボタンを消去
     document.getElementById("tweet-area").textContent = null;
-    // htmlでスクリプトを読んでるからtwttがエラーなく呼べる
-    // オプションは公式よんで。
+    // 新しいボタンの作成
     twttr.widgets.createShareButton(
         "",
         document.getElementById("tweet-area"),
         {
-            size: "large", //ボタンはでかく
-            text: text, // 狙ったテキスト
-            //hashtags: "１人しりとり", // ハッシュタグ
-            //url: url // URL
+            size: "large",
+            text: text,
+            //hashtags: "１人しりとり",
+            //url: url,
         }
     );
 }
