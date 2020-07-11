@@ -28,6 +28,37 @@ window.onload = function () {
     updateTweetText();
 
     console.log(wordsMap);
+
+    for (const [head, words] of wordsMap) {
+        /*
+        <details>
+            <summary>あ</summary>
+            <p>あいさつ</p>
+        </details>
+         */
+
+        const detailsWordsMapElement = document.getElementById("wordsMap");
+
+        const detailsHeadElement = document.createElement("details");
+        detailsWordsMapElement.appendChild(detailsHeadElement);
+
+        const summaryHeadElement = document.createElement("summary");
+        detailsHeadElement.appendChild(summaryHeadElement);
+
+        const headTextNode = document.createTextNode(head);
+        summaryHeadElement.appendChild(headTextNode);
+
+        const ulWordsElement = document.createElement("ul");
+        detailsHeadElement.appendChild(ulWordsElement);
+
+        for (const word of words) {
+            const liWordElement = document.createElement("li");
+            ulWordsElement.appendChild(liWordElement);
+
+            const wordTextNode = document.createTextNode(word);
+            liWordElement.appendChild(wordTextNode);
+        }
+    }
 };
 
 // 単語ファイルの読込む
@@ -178,13 +209,13 @@ function addWord(word) {
 
 // 過去への単語の追加する
 function addWordToBackWords(word) {
-    const wordElement = document.createTextNode(word);
+    const wordTextNode = document.createTextNode(word);
 
-    const newBackWordElement = document.createElement("li");
-    newBackWordElement.appendChild(wordElement);
+    const backWordElement = document.createElement("li");
+    backWordElement.appendChild(wordTextNode);
 
     const backWordsElement = document.getElementById("back_words");
-    backWordsElement.insertBefore(newBackWordElement, backWordsElement.firstChild);
+    backWordsElement.insertBefore(backWordElement, backWordsElement.firstChild);
 }
 
 // 繋がる文字として使えない文字
