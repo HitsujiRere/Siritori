@@ -17,10 +17,10 @@ let isPlaying = true;
 // 前の単語の繋がる文字
 let backWordFoot = "";
 
-class Words {
-    Word() {
-        word = "";
-        mean = "";
+class Word {
+    constructor(word_, mean_) {
+        this.word = word_;
+        this.mean = mean_;
     }
 }
 
@@ -68,7 +68,8 @@ function convertCSVtoWordsMap(csvTxt) {
         if (!wordsMap.has(lineSplited[0].slice(0, 1))) {
             wordsMap.set(lineSplited[0].slice(0, 1), []);
         }
-        wordsMap.get(lineSplited[0].slice(0, 1)).push(lineSplited[0]);
+        const word = new Word(lineSplited[0], lineSplited[1]);
+        wordsMap.get(lineSplited[0].slice(0, 1)).push(word);
     }
 }
 
@@ -92,7 +93,9 @@ function makeWordsMapList() {
             const wordLiElement = document.createElement("li");
             wordsUlElement.appendChild(wordLiElement);
 
-            const wordTextNode = document.createTextNode(word);
+            const wordTextNode = document.createTextNode(
+                word.word + " : " + word.mean
+            );
             wordLiElement.appendChild(wordTextNode);
         }
     }
