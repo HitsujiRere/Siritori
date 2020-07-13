@@ -1,5 +1,5 @@
 
-// 単語マップ Map<string, string[]>()
+// 単語マップ Map< string, Map<Word> >()
 const wordsMap = new Map();
 
 // 以前使用した単語たち
@@ -66,10 +66,10 @@ function convertCSVtoWordsMap(csvTxt) {
     for (let i = 1; i < csvSplited.length; ++i) {
         const lineSplited = csvSplited[i].split(",");
         if (!wordsMap.has(lineSplited[0].slice(0, 1))) {
-            wordsMap.set(lineSplited[0].slice(0, 1), []);
+            wordsMap.set(lineSplited[0].slice(0, 1), new Map());
         }
         const word = new Word(lineSplited[0], lineSplited[1]);
-        wordsMap.get(lineSplited[0].slice(0, 1)).push(word);
+        wordsMap.get(lineSplited[0].slice(0, 1)).set(lineSplited[0], word);
     }
 }
 
@@ -89,12 +89,12 @@ function makeWordsMapList() {
         const wordsUlElement = document.createElement("ul");
         headDetailsElement.appendChild(wordsUlElement);
 
-        for (const word of words) {
+        for (const [word, wordE] of words) {
             const wordLiElement = document.createElement("li");
             wordsUlElement.appendChild(wordLiElement);
 
             const wordTextNode = document.createTextNode(
-                word.word + " : " + word.mean
+                word + " : " + wordE.mean
             );
             wordLiElement.appendChild(wordTextNode);
         }
@@ -126,7 +126,7 @@ function submitedMyWord() {
 
 // 単語が正しいか確かめる
 function checkWord(word) {
-    if (checkHiragana(word) && checkConnect(word) && checkNotUsed(word)) {
+    if (checkHiragana(word) && checkConnect(word) && checkNotUsed(word) && checkExist(word)) {
         connectTime++;
 
         if (checkContinue(word)) {
@@ -195,6 +195,18 @@ function checkNotUsed(word) {
     }
 }
 
+// 単語リストのなかに存在しているか調べる
+function checkExist(word) {
+    if (wordsMap.has(word.slice(0, 1)) &&
+        wordsMap.get(word.slice(0, 1)).has(word)) {
+        return true;
+    }
+    else {
+        messageText = "単語が存在しません";
+        return false;
+    }
+}
+
 // まだ続くかどうか
 function checkContinue(word) {
     return word.slice(-1) != "ん";
@@ -215,7 +227,9 @@ function addWord(word) {
 
 // 過去への単語の追加する
 function addWordToBackWords(word) {
-    const wordTextNode = document.createTextNode(word);
+    const wordTextNode = document.createTextNode(
+        word + " : " + wordsMap.get(word.slice(0, 1)).get(word).mean
+    );
 
     const wordLiElement = document.createElement("li");
     wordLiElement.appendChild(wordTextNode);
