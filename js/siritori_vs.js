@@ -124,6 +124,7 @@ function submitedMyWord() {
 
         if (isPlaying) {
             const enemyWordHead = backWordFoot;
+            console.log(enemyWordHead);
 
             if (wordsMap.has(enemyWordHead) && wordsMap.get(enemyWordHead).size > 0) {
                 let rnd = Math.floor(Math.random() * wordsMap.get(enemyWordHead).size);
@@ -131,14 +132,21 @@ function submitedMyWord() {
 
                 let enemyWord = "";
                 let cnt = 0;
+                console.log(`wordsMap.get(${enemyWordHead}.size) = ${wordsMap.get(enemyWordHead).size}`);
                 for (const [word, wordE] of wordsMap.get(enemyWordHead)) {
+                    console.log(`cnt = ${cnt}`);
+                    console.log(`word = ${word}`);
                     if (cnt == rnd) {
+                        enemyWord = word;
                         break;
                     }
-                    enemyWord = word;
                     cnt++;
                 }
                 console.log(enemyWord);
+
+                if (enemyWord == "") {
+                    console.log("Error!");
+                }
 
                 // 単語の追加
                 addWord(enemyWord);
