@@ -148,7 +148,7 @@ function addWordToBackWords(word) {
 
 // 繋がる文字として使えない文字
 const NGBackWordFootChars = [
-    "ゃ", "ゅ", "ょ", "っ", "ー",
+    "ゃ", "ゅ", "ょ", "っ", "ー", "ぁ", "ぃ", "ぅ", "ぇ", "ぉ",
 ];
 // backWordFootを更新する
 function updateBackWordFoot(word) {
