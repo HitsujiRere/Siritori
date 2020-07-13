@@ -132,7 +132,7 @@ function submitedMyWord() {
 
                 let enemyWord = "";
                 let cnt = 0;
-                console.log(`wordsMap.get(${enemyWordHead}.size) = ${wordsMap.get(enemyWordHead).size}`);
+                console.log(`wordsMap.get(${enemyWordHead}).size = ${wordsMap.get(enemyWordHead).size}`);
                 for (const [word, wordE] of wordsMap.get(enemyWordHead)) {
                     console.log(`cnt = ${cnt}`);
                     console.log(`word = ${word}`);
