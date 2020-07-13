@@ -17,6 +17,13 @@ let isPlaying = true;
 // 前の単語の繋がる文字
 let backWordFoot = "";
 
+class Words {
+    Word() {
+        word = "";
+        mean = "";
+    }
+}
+
 window.onload = function () {
     // 単語マップのロード
     loadWordsMap();
@@ -58,10 +65,10 @@ function convertCSVtoWordsMap(csvTxt) {
 
     for (let i = 1; i < csvSplited.length; ++i) {
         const lineSplited = csvSplited[i].split(",");
-        if (!wordsMap.has(lineSplited[0])) {
-            wordsMap.set(lineSplited[0], []);
+        if (!wordsMap.has(lineSplited[0].slice(0, 1))) {
+            wordsMap.set(lineSplited[0].slice(0, 1), []);
         }
-        wordsMap.get(lineSplited[0]).push(lineSplited[1]);
+        wordsMap.get(lineSplited[0].slice(0, 1)).push(lineSplited[0]);
     }
 }
 
@@ -216,7 +223,7 @@ function addWordToBackWords(word) {
 
 // 繋がる文字として使えない文字
 const NGBackWordFootChars = [
-    "ゃ", "ゅ", "ょ", "っ", "ー",
+    "ゃ", "ゅ", "ょ", "っ", "ー", "ぁ", "ぃ", "ぅ", "ぇ", "ぉ",
 ];
 // backWordFootを更新する
 function updateBackWordFoot(word) {
