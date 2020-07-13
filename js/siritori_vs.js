@@ -119,6 +119,42 @@ function submitedMyWord() {
         updateTweetText();
         // 入力フォームを空にする
         document.getElementById("my_word_input").value = "";
+
+        if (isPlaying) {
+            const enemyWordHead = backWordFoot;
+
+            if (wordsMap.has(enemyWordHead) && wordsMap.get(enemyWordHead).size > 0) {
+                let rnd = Math.floor(Math.random() * wordsMap.get(enemyWordHead).size);
+                console.log(rnd);
+
+                let enemyWord = "";
+                let cnt = 0;
+                for (const [word, wordE] of wordsMap.get(enemyWordHead)) {
+                    if (cnt == rnd) {
+                        break;
+                    }
+                    enemyWord = word;
+                    cnt++;
+                }
+                console.log(enemyWord);
+
+                // 単語の追加
+                addWord(enemyWord);
+
+                messageText += ` → CPUは「${enemyWord}」と返した！`;
+
+                if (!checkContinue(enemyWord)) {
+                    messageText += "勝利！"
+                    isPlaying = false;
+                }
+            }
+            else {
+                messageText += " → CPUはなにも返せない！";
+
+                messageText += "勝利！"
+                isPlaying = false;
+            }
+        }
     }
 
     // メッセージの更新
@@ -127,18 +163,18 @@ function submitedMyWord() {
 
 // 単語が正しいか確かめる
 function checkWord(word) {
-    if (checkHiragana(word) && checkConnect(word) && checkNotUsed(word) && checkExist(word)) {
+    if (checkHiragana(word) && checkConnect(word) && checkNotUsed(word)) {
         connectTime++;
 
         if (checkContinue(word)) {
             console.log("OK!");
 
-            messageText = `${connectTime}個目！`;
+            messageText = "";
         }
         else {
             console.log("FINISH!");
 
-            messageText = `${connectTime}個で終了！`;
+            messageText = "負け！";
 
             isPlaying = false;
         }
@@ -203,7 +239,6 @@ function checkExist(word) {
         return true;
     }
     else {
-        messageText = "単語が存在しません";
         return false;
     }
 }
@@ -229,7 +264,10 @@ function addWord(word) {
 // 過去への単語の追加する
 function addWordToBackWords(word) {
     const wordTextNode = document.createTextNode(
-        word + " : " + wordsMap.get(word.slice(0, 1)).get(word).mean
+        word +
+        (checkExist(word)
+            ? " : " + wordsMap.get(word.slice(0, 1)).get(word).mean
+            : "")
     );
 
     const wordLiElement = document.createElement("li");
@@ -238,7 +276,9 @@ function addWordToBackWords(word) {
     const backWordsElement = document.getElementById("back_words");
     backWordsElement.insertBefore(wordLiElement, backWordsElement.firstChild);
 
-    wordsMap.get(word.slice(0, 1)).delete(word);
+    if (checkExist(word)) {
+        wordsMap.get(word.slice(0, 1)).delete(word);
+    }
 }
 
 // 繋がる文字として使えない文字

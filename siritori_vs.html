@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <script src="js/siritori_vs.js" charset="utf-8"></script>
+
+    <title>しりとり</title>
+</head>
+
+<body>
+    <h1><a href="index.html">しりとり</a></h1>
+
+    <h2>１人しりとり</h2>
+
+    <p>ルール</p>
+    <ul>
+        <li>ひらがなのみ使用可能</li>
+        <li>最後の文字が「ん」だと終了</li>
+        <li>最後の文字が「ゃ」「ゅ」「ょ」「っ」「ー」「ぁ」「ぃ」「ぅ」「ぇ」「ぉ」だとその前の文字から繋げる</li>
+    </ul>
+
+    <p>
+        <span id="back_word">any word</span>
+        「<span id="back_word_foot">any char</span>」
+        →
+    </p>
+
+    <form onsubmit="submitedMyWord(); return false;">
+        <input type="text" id="my_word_input" size="20">
+        <input type="submit" value="決定">
+    </form>
+
+    <p id="input_message"></p>
+
+    <h2>過去</h2>
+    <ul id="back_words">
+    </ul>
+
+    <p></p>
+
+    <div id="tweet-area"> </div>
+    <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <form onclick="location.reload();">
+        <input type="button" value="リセット">
+    </form>
+
+    <details>
+        <summary>単語 : 意味</summary>
+        <ul id="words_map">
+        </ul>
+    </details>
+</body>
+
+</html>
