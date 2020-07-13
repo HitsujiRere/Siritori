@@ -18,7 +18,10 @@ let isPlaying = true;
 let backWordFoot = "";
 
 window.onload = function () {
+    // 単語マップのロード
     loadWordsMap();
+    // 単語マップの表示作成
+    makeWordsMapList();
 
     // 最初の単語
     const firstWord = "しりとり";
@@ -26,39 +29,6 @@ window.onload = function () {
 
     // ツイートボタンの初期化
     updateTweetText();
-
-    console.log(wordsMap);
-
-    for (const [head, words] of wordsMap) {
-        /*
-        <details>
-            <summary>あ</summary>
-            <p>あいさつ</p>
-        </details>
-         */
-
-        const detailsWordsMapElement = document.getElementById("wordsMap");
-
-        const detailsHeadElement = document.createElement("details");
-        detailsWordsMapElement.appendChild(detailsHeadElement);
-
-        const summaryHeadElement = document.createElement("summary");
-        detailsHeadElement.appendChild(summaryHeadElement);
-
-        const headTextNode = document.createTextNode(head);
-        summaryHeadElement.appendChild(headTextNode);
-
-        const ulWordsElement = document.createElement("ul");
-        detailsHeadElement.appendChild(ulWordsElement);
-
-        for (const word of words) {
-            const liWordElement = document.createElement("li");
-            ulWordsElement.appendChild(liWordElement);
-
-            const wordTextNode = document.createTextNode(word);
-            liWordElement.appendChild(wordTextNode);
-        }
-    }
 };
 
 // 単語ファイルの読込む
@@ -92,6 +62,32 @@ function convertCSVtoWordsMap(csvTxt) {
             wordsMap.set(lineSplited[0], []);
         }
         wordsMap.get(lineSplited[0]).push(lineSplited[1]);
+    }
+}
+
+function makeWordsMapList() {
+    for (const [head, words] of wordsMap) {
+        const wordsMapDetailsElement = document.getElementById("words_map");
+
+        const headDetailsElement = document.createElement("details");
+        wordsMapDetailsElement.appendChild(headDetailsElement);
+
+        const headSummaryElement = document.createElement("summary");
+        headDetailsElement.appendChild(headSummaryElement);
+
+        const headTextNode = document.createTextNode(head);
+        headSummaryElement.appendChild(headTextNode);
+
+        const wordsUlElement = document.createElement("ul");
+        headDetailsElement.appendChild(wordsUlElement);
+
+        for (const word of words) {
+            const wordLiElement = document.createElement("li");
+            wordsUlElement.appendChild(wordLiElement);
+
+            const wordTextNode = document.createTextNode(word);
+            wordLiElement.appendChild(wordTextNode);
+        }
     }
 }
 
@@ -211,11 +207,11 @@ function addWord(word) {
 function addWordToBackWords(word) {
     const wordTextNode = document.createTextNode(word);
 
-    const backWordElement = document.createElement("li");
-    backWordElement.appendChild(wordTextNode);
+    const wordLiElement = document.createElement("li");
+    wordLiElement.appendChild(wordTextNode);
 
     const backWordsElement = document.getElementById("back_words");
-    backWordsElement.insertBefore(backWordElement, backWordsElement.firstChild);
+    backWordsElement.insertBefore(wordLiElement, backWordsElement.firstChild);
 }
 
 // 繋がる文字として使えない文字
