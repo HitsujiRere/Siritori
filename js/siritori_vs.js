@@ -28,6 +28,8 @@ class Word {
 window.onload = function () {
     // 単語マップのロード
     loadWordsMap();
+    // 無の削除
+    wordsMap.delete("");
     // 単語マップの表示作成
     makeWordsMapList();
 
