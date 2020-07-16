@@ -173,7 +173,8 @@ function submitedMyWord() {
 
 // 単語が正しいか確かめる
 function checkWord(word) {
-    if (checkHiragana(word) && checkConnect(word) && checkNotUsed(word)) {
+    if (checkHiragana(word) && checkViableWord(word) &&
+        checkConnect(word) && checkNotUsed(word)) {
         connectTime++;
 
         if (checkContinue(word)) {
@@ -213,6 +214,30 @@ function checkHiragana(word) {
 
         return false;
     }
+}
+
+// 存在しうる単語かどうか
+function checkViableWord(word) {
+    // 2連続であるかどうか
+    //console.log("([ゃゅょぁぃぅぇぉっー])\1+ = " + word.match(/^.*([ゃゅょぁぃぅぇぉっー])\1+.*$/));
+    // [ゃゅょぁぃぅぇぉ]が連続して使われているか
+    console.log("[ゃゅょぁぃぅぇぉ]{2,} = " + word.match(/^.*[ゃゅょぁぃぅぇぉ]{2,}.*$/));
+    // [っー]が連続して使われているか
+    console.log("[ーっ]\\1+ = " + word.match(/^.*[ーっ]\1+.*$/));
+    // [っー]→[ゃゅょぁぃぅぇぉ]という順番で使われているか
+    console.log("[っー][ゃゅょぁぃぅぇぉ] = " + word.match(/^.*[っー][ゃゅょぁぃぅぇぉ].*$/));
+    // っ→ーという順番で使われているか
+    console.log("(ー)(っ) = " + word.match(/^.*(ー)(っ).*$/));
+
+    if (word.match(/^.*[ゃゅょぁぃぅぇぉ]{2,}.*$/) ||
+        word.match(/^.*[ーっ]\1+.*$/) ||
+        word.match(/^.*[っー][ゃゅょぁぃぅぇぉ].*$/) ||
+        word.match(/^.*(ー)(っ).*$/)
+    ) {
+        messageText = "存在しうる単語ではありません";
+        return false;
+    }
+    return true;
 }
 
 // 前の単語と繋がっているか
