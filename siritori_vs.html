@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <script src="js/siritori_vs.js" charset="utf-8"></script>
+    <script type="module" src="js/siritori_vs.js" charset="utf-8"></script>
 
     <title>しりとり</title>
 </head>
@@ -28,7 +28,10 @@
         →
     </p>
 
-    <form onsubmit="submitedMyWord(); return false;">
+    <form id="form" onsubmit="
+        import('./js/siritori_vs.js').then((Module) => { Module.submitedMyWord(); });
+         return false;
+        ">
         <input type="text" id="my_word_input" size="20">
         <input type="submit" value="決定">
     </form>
@@ -50,15 +53,17 @@
 
     <details>
         <summary>単語（頭順） : 意味</summary>
-        <ul id="words_map_head">
+        <ul id="words_map">
         </ul>
     </details>
 
+    <!--
     <details>
         <summary>単語（足順） : 意味</summary>
         <ul id="words_map_foot">
         </ul>
     </details>
+    -->
 </body>
 
 </html>
