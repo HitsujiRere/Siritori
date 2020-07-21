@@ -1,13 +1,10 @@
 
 import * as Siritori from './siritori.mjs';
 
-window.onload = function () {
-    // ツイートボタンの初期化
-    updateTweetText();
+Siritori.makeWordsMapList();
 
-    //document.getElementById("form").addEventListener('onsubmit', submitedMyWord);
-    //document.getElementById("form").addEventListener('submit', () => { return false; });
-};
+// ツイートボタンの初期化
+updateTweetText();
 
 // 単語の入力を感知する
 export function submitedMyWord() {
@@ -71,6 +68,6 @@ export function submitedMyWord() {
 // ツイートするテキストの変更
 function updateTweetText() {
     Siritori.setTweetButton(
-        `１人しりとりで${Siritori.connectTime}回続きました！`
+        `CPU対戦しりとりで${Siritori.connectTime}回続きました！`
     );
 }

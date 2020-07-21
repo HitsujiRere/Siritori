@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <script src="js/siritori_alone.js" charset="utf-8"></script>
+    <script type="module" src="js/siritori_alone.mjs" charset="utf-8"></script>
 
     <title>しりとり</title>
 </head>
@@ -27,7 +27,12 @@
         →
     </p>
 
-    <form onsubmit="submitedMyWord(); return false;">
+    <form id="form" onsubmit="
+            import('./js/siritori_alone.mjs').then((Module) => { 
+                Module.submitedMyWord(); 
+            });
+             return false;
+            ">
         <input type="text" id="my_word_input" size="20">
         <input type="submit" value="決定">
     </form>

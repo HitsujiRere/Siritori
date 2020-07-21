@@ -32,13 +32,6 @@ const NGBackWordFootChars = [
 
 /*****/
 
-// 単語マップのロード
-loadWordsMap();
-// 無の削除
-wordsMap.delete("");
-// 単語マップの表示作成
-makeWordsMapList();
-
 // 最初の単語
 const firstWord = "しりとり";
 addWord(firstWord);
@@ -80,7 +73,12 @@ export function convertCSVtoWordsMap(csvTxt) {
     }
 }
 
-function makeWordsMapList() {
+export function makeWordsMapList() {
+    // 単語マップのロード
+    loadWordsMap();
+    // 無の削除
+    wordsMap.delete("");
+
     for (const [head, words] of wordsMap) {
         const wordsMapDetailsElement = document.getElementById("words_map");
 
