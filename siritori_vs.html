@@ -29,7 +29,9 @@
     </p>
 
     <form id="form" onsubmit="
-        import('./js/siritori_vs.js').then((Module) => { Module.submitedMyWord(); });
+        import('./js/siritori_vs.js').then((Module) => { 
+            Module.submitedMyWord(); 
+        });
          return false;
         ">
         <input type="text" id="my_word_input" size="20">
