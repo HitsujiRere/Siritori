@@ -5,7 +5,7 @@ import * as Siritori from './siritori.mjs';
 updateTweetText();
 
 // 単語の入力を感知する
-function submitedMyWord() {
+export function submitedMyWord() {
     const myWord = document.getElementById("my_word_input").value;
 
     // 単語が入力されていないなら終わる
