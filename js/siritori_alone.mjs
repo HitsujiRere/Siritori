@@ -18,7 +18,7 @@ export function submitedMyWord() {
         // 単語の追加
         Siritori.addWord(myWord);
         // ツイートする文の更新
-        Siritori.updateTweetText();
+        updateTweetText();
         // 入力フォームを空にする
         document.getElementById("my_word_input").value = "";
     }
